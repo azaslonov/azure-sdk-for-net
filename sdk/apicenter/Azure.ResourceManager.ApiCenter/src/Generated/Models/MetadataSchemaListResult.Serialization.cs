@@ -14,27 +14,30 @@ using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    internal partial class ApiCenterServiceListResult : IUtf8JsonSerializable, IJsonModel<ApiCenterServiceListResult>
+    internal partial class MetadataSchemaListResult : IUtf8JsonSerializable, IJsonModel<MetadataSchemaListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterServiceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataSchemaListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ApiCenterServiceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetadataSchemaListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetadataSchemaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataSchemaListResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (var item in Value)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -57,19 +60,19 @@ namespace Azure.ResourceManager.ApiCenter.Models
             writer.WriteEndObject();
         }
 
-        ApiCenterServiceListResult IJsonModel<ApiCenterServiceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MetadataSchemaListResult IJsonModel<MetadataSchemaListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetadataSchemaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataSchemaListResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCenterServiceListResult(document.RootElement, options);
+            return DeserializeMetadataSchemaListResult(document.RootElement, options);
         }
 
-        internal static ApiCenterServiceListResult DeserializeApiCenterServiceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MetadataSchemaListResult DeserializeMetadataSchemaListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiCenterServiceData> value = default;
+            IReadOnlyList<MetadataSchemaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -85,10 +88,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ApiCenterServiceData> array = new List<ApiCenterServiceData>();
+                    List<MetadataSchemaData> array = new List<MetadataSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiCenterServiceData.DeserializeApiCenterServiceData(item, options));
+                        array.Add(MetadataSchemaData.DeserializeMetadataSchemaData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,38 +111,38 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServiceListResult(value, nextLink, serializedAdditionalRawData);
+            return new MetadataSchemaListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiCenterServiceListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MetadataSchemaListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetadataSchemaListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataSchemaListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        ApiCenterServiceListResult IPersistableModel<ApiCenterServiceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MetadataSchemaListResult IPersistableModel<MetadataSchemaListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetadataSchemaListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiCenterServiceListResult(document.RootElement, options);
+                        return DeserializeMetadataSchemaListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterServiceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataSchemaListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiCenterServiceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetadataSchemaListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
